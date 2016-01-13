@@ -6,6 +6,52 @@ from auto_encoder.encoder import gen_src_dst_path
 from auto_encoder.encoder import init_args
 
 
+def init_args(args=sys.argv[1:]):
+    """Get the parsed argument object.
+
+    Args:
+        args: list of arguments
+    Returns:
+        Parsed argument object.
+    Raises:
+        None
+    """
+    parser = argparse.ArgumentParser(
+        description="Convert ts files to mp4 files with avconv as default.")
+
+    parser.add_argument(
+        "-s", "--source-file",\
+        action="store",\
+        default=None,\
+        type=str,\
+        help="source file path to converting")
+    parser.add_argument(
+        "-d", "--dest-file",\
+        action="store",\
+        default=None,\
+        type=str,\
+        help="destination file path to be converted")
+    parser.add_argument(
+        "-vb", "--video-bitrate",\
+        action="store",\
+        default=1,\
+        type=int,\
+        help="video bitrate as mbps")
+    parser.add_argument(
+        "-ab", "--audio-bitrate",\
+        action="store",\
+        default=256,\
+        type=int,\
+        help="audio bitrate as kbps")
+    parser.add_argument(
+        "--deinterlace",\
+        action="store_true",\
+        default=False,\
+        help="enable deinterlace")
+
+    return parser.parse_args(args)
+
+
 def main():
     """ main routine.
     """
