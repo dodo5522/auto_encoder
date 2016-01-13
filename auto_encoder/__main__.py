@@ -66,15 +66,15 @@ def main():
     if args.source_file and args.dest_file:
         encode(
             args.source_file, args.dest_file,
-            args.video_bitrate, args.audio_bitrate,
-            args.deinterlace)
+            reso='1280x720', vb_mbps=args.video_bitrate, ab_kbps=args.audio_bitrate,
+            is_deint=args.deinterlace)
     else:
         for (source_file, dest_file) in gen_src_dst('/symlinks/videos/tv', '/symlinks/videos/tv_converted'):
             try:
                 encode(
                     source_file, dest_file,
-                    args.video_bitrate, args.audio_bitrate,
-                    args.deinterlace)
+                    reso='1280x720', vb_mbps=args.video_bitrate, ab_kbps=args.audio_bitrate,
+                    is_deint=args.deinterlace)
             except Exception:
                 if os.path.isfile(dest_file):
                     os.remove(dest_file)
