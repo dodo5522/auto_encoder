@@ -28,4 +28,10 @@ setup(
     url='',
     packages=[
         'auto_encoder'],
-    install_requires=requirements())
+    install_requires=requirements(),
+    entry_points={
+        'console_scripts': [
+            'auto_encoder = auto_encoder.__main__:main'
+            ]
+        }
+    )
