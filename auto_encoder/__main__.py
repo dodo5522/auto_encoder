@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-from auto_encoder.encoder import convert
-from auto_encoder.encoder import gen_src_dst_path
-from auto_encoder.encoder import init_args
+import argparse
+import logging
+import sys
+from auto_encoder.encoder import encode
+from auto_encoder.encoder import gen_src_dst
 
 
 def init_args(args=sys.argv[1:]):
@@ -55,17 +57,21 @@ def init_args(args=sys.argv[1:]):
 def main():
     """ main routine.
     """
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s-%(levelname)s: %(message)s')
+
     args = init_args()
 
     if args.source_file and args.dest_file:
-        convert(
+        encode(
             args.source_file, args.dest_file,
             args.video_bitrate, args.audio_bitrate,
             args.deinterlace)
     else:
-        for (source_file, dest_file) in gen_src_dst_path():
+        for (source_file, dest_file) in gen_src_dst('/symlinks/videos/tv', '/symlinks/videos/tv_converted'):
             try:
-                convert(
+                encode(
                     source_file, dest_file,
                     args.video_bitrate, args.audio_bitrate,
                     args.deinterlace)
@@ -77,4 +83,5 @@ def main():
                 os.remove(args.source_file)
 
 
-main()
+if __name__ == '__main__':
+    main()
