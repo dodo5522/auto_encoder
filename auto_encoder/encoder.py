@@ -76,12 +76,12 @@ def get_keywords(root_dir):
     return keywords
 
 
-def gen_src_dst(root_dir_src, root_dir_dst, src_ext='m2ts', dst_ext='mp4'):
+def gen_src_dst(root_src, root_dst, src_ext='m2ts', dst_ext='mp4'):
     """Generator to return source and destination file name tuple.
 
     Args:
-        root_dir_src: root directory of source files
-        root_dir_dst: root directory of destination having child directories of keyword
+        root_src: root directory of source files, or a source file
+        root_dst: root directory of destination having child directories of keyword, or a dest file
         src_ext: source file's extention string like 'm2ts'
         dst_ext: destination file's extention string like 'mp4'
     Returns:
@@ -89,11 +89,14 @@ def gen_src_dst(root_dir_src, root_dir_dst, src_ext='m2ts', dst_ext='mp4'):
     Raises:
         None
     """
-    for keyword in get_keywords(root_dir_dst):
-        src_files = glob.glob(
-            os.path.join(root_dir_src, '*{}*.{}'.format(keyword, src_ext)))
+    if os.path.isfile(root_src) or os.path.isfile(root_dst):
+        yield (root_src, root_dst)
+    else:
+        for keyword in get_keywords(root_dst):
+            src_files = glob.glob(
+                os.path.join(root_src, '*{}*.{}'.format(keyword, src_ext)))
 
-        for src_file in src_files:
-            (base, ext) = os.path.splitext(os.path.basename(src_file))
-            dst_file = os.path.join(root_dir_dst, keyword, base + '.' + dst_ext)
-            yield (src_file, dst_file)
+            for src_file in src_files:
+                (base, ext) = os.path.splitext(os.path.basename(src_file))
+                dst_file = os.path.join(root_dst, keyword, base + '.' + dst_ext)
+                yield (src_file, dst_file)
