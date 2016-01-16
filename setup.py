@@ -32,6 +32,7 @@ setup(
     entry_points={
         'console_scripts': [
             'auto_encoder = auto_encoder.__main__:main'
-            ]
-        }
-    )
+        ]
+    },
+    test_suite='nose.collector'
+)
