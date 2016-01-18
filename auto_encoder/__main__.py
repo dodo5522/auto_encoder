@@ -3,6 +3,7 @@
 
 import argparse
 import logging
+import os
 import sys
 from auto_encoder.encoder import encode
 from auto_encoder.encoder import gen_src_dst
