@@ -1,6 +1,7 @@
 README.rst
 .python-*
 *.egg-info
+*.pyc
 build
 dist
 __pycache__
