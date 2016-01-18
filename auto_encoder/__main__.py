@@ -54,6 +54,17 @@ def init_args(args=sys.argv[1:]):
     return parser.parse_args(args)
 
 
+def get_logging_level_from(level):
+    '''Return debug level according to logging module.
+
+    Args:
+        level: level string like 'DEBUG'
+    Returns:
+        logging.DEBUG, logging.INFO, or something
+    '''
+    return getattr(logging, level.upper()) if hasattr(logging, level.upper()) else logging.INFO
+
+
 def main():
     """ main routine.
     """
