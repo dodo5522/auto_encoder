@@ -5,7 +5,7 @@ import os
 import unittest
 from auto_encoder import encoder
 from auto_encoder.base import ConvertError
-from minimock import Mock, restore
+from minimock import mock, Mock, restore
 
 
 class TestEncoder(unittest.TestCase):
@@ -31,27 +31,23 @@ class TestEncoder(unittest.TestCase):
 
     def test_encode_success(self):
         """encode test with succeeded"""
-        encoder.subprocess.Popen = Mock(
-            'encoder.subprocess.Popen',
-            returns=Mock(
-                'proc',
-                communicate=Mock(
-                    'proc.communicate',
-                    returns=(b'', b'')),
-                returncode=0))
+        mock('encoder.subprocess.Popen', returns=Mock(
+            'proc',
+            communicate=Mock(
+                'proc.communicate',
+                returns=(b'', b'')),
+            returncode=0))
 
         encoder.encode('aaa.m2ts', 'bbb.mp4', reso='1280x720', vb_mbps=2, ab_kbps=256, is_deint=False)
 
     def test_encode_failed_returncode_1(self):
         """encode test with failed"""
-        encoder.subprocess.Popen = Mock(
-            'encoder.subprocess.Popen',
-            returns=Mock(
-                'proc',
-                communicate=Mock(
-                    'proc.communicate',
-                    returns=(b'', b'')),
-                returncode=1))
+        mock('encoder.subprocess.Popen', returns=Mock(
+            'proc',
+            communicate=Mock(
+                'proc.communicate',
+                returns=(b'', b'')),
+            returncode=1))
 
         dummy_src_file = 'aaa.m2ts'
         args = (dummy_src_file, 'bbb.mp4')
@@ -65,13 +61,8 @@ class TestEncoder(unittest.TestCase):
     def test_get_keywords_valid(self):
         """get_keywords valid test"""
 
-        encoder.glob.glob = Mock(
-            'encoder.glob.glob',
-            returns=['/aaa/bbb/ccc', '/aaa/bbb/ddd'])
-
-        encoder.os.path.isdir = Mock(
-            'encoder.os.path.isdir',
-            returns=True)
+        mock('encoder.glob.glob', returns=['/aaa/bbb/ccc', '/aaa/bbb/ddd'])
+        mock('encoder.os.path.isdir', returns=True)
 
         keywords = encoder.get_keywords('/aaa/bbb')
 
@@ -80,13 +71,8 @@ class TestEncoder(unittest.TestCase):
     def test_get_keywords_empty(self):
         """get_keywords empty test"""
 
-        encoder.glob.glob = Mock(
-            'encoder.glob.glob',
-            returns=[''])
-
-        encoder.os.path.isdir = Mock(
-            'encoder.os.path.isdir',
-            returns=False)
+        mock('encoder.glob.glob', returns=[''])
+        mock('encoder.os.path.isdir', returns=False)
 
         keywords = encoder.get_keywords('/aaa/bbb')
 
