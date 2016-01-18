@@ -51,6 +51,11 @@ def init_args(args=sys.argv[1:]):
         action="store_true",
         default=False,
         help="enable deinterlace")
+    parser.add_argument(
+        "--level",
+        action="store",
+        default="info",
+        help="debug level")
 
     return parser.parse_args(args)
 
@@ -66,14 +71,12 @@ def get_logging_level_from(level):
     return getattr(logging, level.upper()) if hasattr(logging, level.upper()) else logging.INFO
 
 
-def main():
+def main(args):
     """ main routine.
     """
     logging.basicConfig(
-        level=logging.INFO,
+        level=get_logging_level_from(args.level),
         format='%(asctime)s-%(levelname)s: %(message)s')
-
-    args = init_args()
 
     for (source_file, dest_file) in gen_src_dst(args.source, args.dest):
         try:
@@ -90,4 +93,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(init_args())
