@@ -42,10 +42,10 @@ def encode(src, dst, reso='1280x720', vb_mbps=2, ab_kbps=256, is_deint=False):
     logging.info(' '.join(cmd))
 
     subp = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            stdin=subprocess.PIPE)
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        stdin=subprocess.PIPE)
 
     (stdout_data, stderr_data) = subp.communicate()
 
@@ -69,11 +69,7 @@ def get_keywords(root_dir):
     Raises:
         None
     """
-    keywords = [os.path.basename(keyword) for keyword \
-        in glob.glob(os.path.join(root_dir, "*")) \
-        if os.path.isdir(keyword)]
-
-    return keywords
+    return [os.path.basename(keyword) for keyword in glob.glob(os.path.join(root_dir, "*")) if os.path.isdir(keyword)]
 
 
 def gen_src_dst(root_src, root_dst, src_ext='m2ts', dst_ext='mp4'):
