@@ -27,6 +27,20 @@ class TestMain(unittest.TestCase):
         """teardown"""
         pass
 
+    def test_init_args_normal(self):
+        """test init_args() with normal arguments."""
+        args = _main.init_args(['-s', 'dummy.m2ts', '-d', 'dummy.mp4', '--deinterlace'])
+        self.assertEqual(args.source, 'dummy.m2ts')
+        self.assertEqual(args.dest, 'dummy.mp4')
+        self.assertTrue(args.deinterlace)
+
+    def test_init_args_abnormal(self):
+        """test init_args() with abnormal arguments."""
+        args = _main.init_args([])
+        self.assertEqual(args.source, '/symlinks/videos/tv')
+        self.assertEqual(args.dest, '/symlinks/videos/tv_converted')
+        self.assertFalse(args.deinterlace)
+
     def test_get_debug_level_lower(self):
         """test with lower case string argument."""
         self.assertEqual(logging.DEBUG, _main.get_logging_level_from('debug'))
