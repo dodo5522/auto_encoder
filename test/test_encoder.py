@@ -78,10 +78,15 @@ class TestEncoder(unittest.TestCase):
 
         self.assertEqual(0, len(keywords))
 
-    def test_get_src_dst_(self):
-        """get_keywords test"""
-        #gen_src_dst(root_src, root_dst, src_ext='m2ts', dst_ext='mp4'):
-        pass
+    def test_get_src_dst_with_files(self):
+        """get_src_dst() test with files directly"""
+        mock('encoder.os.path.isfile', returns=True)
+
+        dummy_src_file = 'aaa.m2ts'
+        dummy_dst_file = 'aaa.mp4'
+        for src, dst in encoder.gen_src_dst(dummy_src_file, dummy_dst_file, src_ext='m2ts', dst_ext='mp4'):
+            self.assertEqual(dummy_src_file, src)
+            self.assertEqual(dummy_dst_file, dst)
 
 
 if __name__ == "__main__":
