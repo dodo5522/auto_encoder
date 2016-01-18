@@ -42,17 +42,17 @@ class TestMain(unittest.TestCase):
         self.assertFalse(args.deinterlace)
 
     def test_get_debug_level_lower(self):
-        """test with lower case string argument."""
+        """test get_debug_level() with lower case string argument."""
         self.assertEqual(logging.DEBUG, _main.get_logging_level_from('debug'))
         self.assertEqual(logging.INFO, _main.get_logging_level_from('info'))
 
     def test_get_debug_level_upper(self):
-        """test with upper case string argument."""
+        """test get_debug_level() with upper case string argument."""
         self.assertEqual(logging.DEBUG, _main.get_logging_level_from('DEBUG'))
         self.assertEqual(logging.INFO, _main.get_logging_level_from('INFO'))
 
     def test_get_debug_level_invalid(self):
-        """test with invalid string argument."""
+        """test get_debug_level() with invalid string argument."""
         self.assertEqual(logging.INFO, _main.get_logging_level_from('HOGE'))
 
 
