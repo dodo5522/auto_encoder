@@ -88,6 +88,25 @@ class TestEncoder(unittest.TestCase):
             self.assertEqual(dummy_src_file, src)
             self.assertEqual(dummy_dst_file, dst)
 
+    def test_get_src_dst_with_dirs(self):
+        """get_src_dst() test with files read from direcotry"""
+        dummy_src_root = '/sym/videos/raw'
+        dummy_dst_root = '/sym/videos/converted'
+
+        dummy_src_file = os.path.join(dummy_src_root, '[151210]温泉の旅.m2ts')
+        dummy_keyword = '温泉'
+
+        mock('encoder.os.path.isfile', returns=False)
+        mock('encoder.get_keywords', returns=(dummy_keyword,))
+        mock('encoder.glob.glob', returns=(dummy_src_file,))
+
+        for src, dst in encoder.gen_src_dst(dummy_src_root, dummy_dst_root, src_ext='m2ts', dst_ext='mp4'):
+            self.assertEqual(dummy_src_file, src)
+            self.assertEqual(
+                os.path.join(
+                    dummy_dst_root, dummy_keyword,
+                    os.path.splitext(os.path.basename(dummy_src_file))[0] + '.mp4'), dst)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
