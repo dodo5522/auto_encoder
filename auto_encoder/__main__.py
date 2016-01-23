@@ -71,7 +71,7 @@ def get_logging_level_from(level):
     return getattr(logging, level.upper()) if hasattr(logging, level.upper()) else logging.INFO
 
 
-def main(args):
+def main(args=init_args()):
     """ main routine.
     """
     logging.basicConfig(
@@ -94,4 +94,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-    main(init_args())
+    main()
