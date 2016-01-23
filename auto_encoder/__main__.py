@@ -65,10 +65,11 @@ def main():
 
     for (source_file, dest_file) in gen_src_dst(args.source, args.dest):
         try:
-            encode(
-                source_file, dest_file,
-                reso='1280x720', vb_mbps=args.video_bitrate, ab_kbps=args.audio_bitrate,
-                is_deint=args.deinterlace)
+            if not os.path.isfile(dest_file):
+                encode(
+                    source_file, dest_file,
+                    reso='1280x720', vb_mbps=args.video_bitrate, ab_kbps=args.audio_bitrate,
+                    is_deint=args.deinterlace)
         except Exception:
             if os.path.isfile(dest_file):
                 os.remove(dest_file)
