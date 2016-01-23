@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def readme():
@@ -19,6 +19,10 @@ def requirements():
         return []
 
 
+def packages():
+    return find_packages(exclude=['*test*', '*.egg-info'])
+
+
 setup(
     name='auto-encoder',
     version='0.0.1',
@@ -26,8 +30,7 @@ setup(
     long_description=readme(),
     author='Takashi Ando',
     url='',
-    packages=[
-        'auto_encoder'],
+    packages=packages(),
     install_requires=requirements(),
     entry_points={
         'console_scripts': [

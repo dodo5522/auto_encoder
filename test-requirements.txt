@@ -1,0 +1,5 @@
+coverage
+MiniMock
+nose
+flake8
+coveralls
