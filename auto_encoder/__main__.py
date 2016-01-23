@@ -71,9 +71,11 @@ def get_logging_level_from(level):
     return getattr(logging, level.upper()) if hasattr(logging, level.upper()) else logging.INFO
 
 
-def main(args=init_args()):
+def main():
     """ main routine.
     """
+    args = init_args()
+
     logging.basicConfig(
         level=get_logging_level_from(args.level),
         format='%(asctime)s-%(levelname)s: %(message)s')
